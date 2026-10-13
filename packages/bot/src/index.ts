@@ -248,20 +248,37 @@ bot.catch((error) => {
   else logger.error({ err: context }, 'bot error');
 });
 
+/** Retry transient network failures (for example EAI_AGAIN/DNS outages).
+ * Telegram API errors such as an invalid token are not retried indefinitely.
+ */
+async function withTelegramNetworkRetry<T>(operation: () => Promise<T>, label: string): Promise<T> {
+  let delayMs = 1_000;
+  for (;;) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (!(error instanceof HttpError)) throw error;
+      logger.warn({ err: error, retryInMs: delayMs }, `Telegram network request failed during ${label}; retrying`);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      delayMs = Math.min(delayMs * 2, 30_000);
+    }
+  }
+}
+
 async function main(): Promise<void> {
   if (!env.BOT_TOKEN) {
     logger.error('BOT_TOKEN is not set — the bot cannot start.');
     process.exit(1);
   }
 
-  await bot.api.setMyCommands([
+  await withTelegramNetworkRetry(() => bot.api.setMyCommands([
     { command: 'start', description: 'Open Click Battle' },
     { command: 'play', description: 'Play a match' },
     { command: 'balance', description: 'Check your USDT balance' },
     { command: 'stats', description: 'Your level, rank and record' },
     { command: 'leaderboard', description: 'Top players' },
     { command: 'help', description: 'How to play' },
-  ]);
+  ]), 'setMyCommands');
 
   const notifier = setInterval(() => void drainNotifications(), 5_000);
   notifier.unref();
@@ -269,10 +286,10 @@ async function main(): Promise<void> {
   if (env.BOT_WEBHOOK_URL) {
     // Webhook mode is handled by the deployment's HTTP layer; here we only
     // register the endpoint so Telegram knows where to deliver.
-    await bot.api.setWebhook(env.BOT_WEBHOOK_URL, {
+    await withTelegramNetworkRetry(() => bot.api.setWebhook(env.BOT_WEBHOOK_URL!, {
       secret_token: env.BOT_WEBHOOK_SECRET || undefined,
       drop_pending_updates: true,
-    });
+    }), 'setWebhook');
     logger.info({ url: env.BOT_WEBHOOK_URL }, 'webhook registered');
   } else {
     await bot.api.deleteWebhook({ drop_pending_updates: true }).catch(() => undefined);
