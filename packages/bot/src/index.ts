@@ -51,8 +51,8 @@ function playKeyboard(): InlineKeyboard {
 
 const WELCOME = `⚡ *${APP_NAME}* — fastest finger wins\\.
 
-Two players\\. Three rounds\\. One button\\.
-When *GO* appears, tap first\\. Win 2 rounds to take the match\\.
+Two players\\. Five rounds\\. One button\\.
+When *GO* appears, tap first\\. Win 3 rounds to take the match\\.
 
 *Modes*
 🎮 *Free* — play for XP, points and rank
@@ -68,7 +68,7 @@ const HOW_TO_PLAY = `❓ *How to play*
 3\\. Watch the countdown — then wait\\.
 4\\. *GO* appears at a random moment\\. Tap as fast as you can\\.
 5\\. Tapping before GO loses the round — don't guess\\.
-6\\. First to win 2 of 3 rounds is champion\\.
+6\\. First to win 3 of 5 rounds is champion\\.
 
 *Paid matches*
 Each player pays the entry\\. A 5% fee is taken from each entry, and the champion takes the rest\\.
