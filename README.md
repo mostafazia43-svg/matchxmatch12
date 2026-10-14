@@ -1,6 +1,6 @@
 # ⚡ Click Battle
 
-A Telegram Mini App: real-time 1v1 reaction duels. Two players, three rounds,
+A Telegram Mini App: real-time 1v1 reaction duels. Two players, up to five rounds,
 one button. Free for points, or paid in USDT on TON.
 
 > **Real-money product.** Before taking deposits, get legal advice on licensing,
@@ -15,7 +15,7 @@ one button. Free for points, or paid in USDT on TON.
 2. A 3-2-1 countdown runs — then you wait.
 3. **GO** appears at a moment you cannot predict. Tap first to win the round.
 4. Tapping before GO loses the round outright.
-5. First to win 2 of 3 rounds is champion.
+5. First to win 3 of 5 rounds is champion.
 
 In a paid match each player pays the entry, 5% is taken from **each** entry, and
 the champion takes the rest:
