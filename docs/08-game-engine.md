@@ -2,8 +2,8 @@
 
 ## Match shape
 
-- 3 rounds, first to 2 round wins (`game.rounds_to_win` / `game.max_rounds`).
-- Ties do not award a round, so three tied rounds leave the score 0–0. Per the
+- Up to 5 rounds, first to 3 round wins (`game.rounds_to_win` / `game.max_rounds`).
+- Ties do not award a round, so five tied rounds leave the score 0–0. Per the
   spec, play continues: extra rounds are appended until a champion exists.
 - Sudden death is capped at `maxRounds + 6`. Beyond that the match is voided and
   both entries returned — an unbounded tie would otherwise hold two players and

@@ -12,7 +12,7 @@
 | Paid tiers | $5 / $10 / $30 / $50 (admin-configurable) |
 | Commission | 5% deducted from **each** player's entry (admin-configurable, basis points) |
 | Currency | USDT (TON network), 6 decimals |
-| Match format | Best of 3 rounds, sudden-death on tie |
+| Match format | Best of 5 rounds, sudden-death on tie |
 
 ## 2. Why this stack (deviation from the brief)
 
